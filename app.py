@@ -1,5 +1,6 @@
 import streamlit as st
 from resume_parser import extract_resume_text
+from ai_matcher import calculate_similarity
 from matcher import match_skills
 
 st.title("AI Resume Screening System")
@@ -19,6 +20,3 @@ if uploaded_file:
     score, matched, missing = match_skills(resume_text, skills)
 
     st.subheader(f"Match Score: {score:.2f}%")
-
-    st.write("Matched Skills:", matched)
-    st.write("Missing Skills:", missing)
