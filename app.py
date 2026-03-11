@@ -4,19 +4,19 @@ from ai_matcher import calculate_similarity
 from matcher import match_skills
 
 st.title("AI Resume Screening System")
+job_desc = st.text_area("Paste Job Description")
 
 uploaded_file = st.file_uploader("Upload Resume", type=["pdf"])
 
-if uploaded_file:
+if uploaded_file and job_desc:
 
     with open("resume.pdf", "wb") as f:
         f.write(uploaded_file.read())
 
     resume_text = extract_resume_text("resume.pdf")
 
-    with open("skills.txt") as f:
-        skills = [s.strip() for s in f.readlines()]
+    score = calculate_similarity(resume_text, job_desc)
 
-    score, matched, missing = match_skills(resume_text, skills)
+    st.subheader(f"AI Match Score: {score:.2f}%")
 
-    st.subheader(f"Match Score: {score:.2f}%")
+    
